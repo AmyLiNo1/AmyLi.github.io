@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://amylino1.com ">
-  <title>阿三大下 | AmyLi的博客</title>
+  <title>写dva+react遇到的问题 | AmyLi的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="此处略去n多字">
+  <meta name="description" content="标签：dva react">
 <meta name="keywords" content="前端 javascript nodejs html css">
 <meta property="og:type" content="article">
-<meta property="og:title" content="阿三大下">
-<meta property="og:url" content="http://amylino1.com /2018/05/20/阿三大下/index.html">
+<meta property="og:title" content="写dva+react遇到的问题">
+<meta property="og:url" content="http://amylino1.com /2018/05/20/写dva+react遇到的问题/index.html">
 <meta property="og:site_name" content="AmyLi的博客">
-<meta property="og:description" content="此处略去n多字">
+<meta property="og:description" content="标签：dva react">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-20T07:55:55.917Z">
+<meta property="og:image" content="http://note.youdao.com/yws/res/112/WEBRESOURCE2836d9ccd8739417f3df148b23c12c6e">
+<meta property="og:updated_time" content="2018-05-20T13:28:28.745Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿三大下">
-<meta name="twitter:description" content="此处略去n多字">
+<meta name="twitter:title" content="写dva+react遇到的问题">
+<meta name="twitter:description" content="标签：dva react">
+<meta name="twitter:image" content="http://note.youdao.com/yws/res/112/WEBRESOURCE2836d9ccd8739417f3df148b23c12c6e">
   
     <link rel="alternative" href="/atom.xml" title="AmyLi的博客" type="application/atom+xml">
   
@@ -157,27 +159,39 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-阿三大下" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-写dva+react遇到的问题" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      阿三大下
+      写dva+react遇到的问题
     </h1>
   
 
         
-        <a href="/2018/05/20/阿三大下/" class="archive-article-date">
-  	<time datetime="2018-05-20T07:55:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
+        <a href="/2018/05/20/写dva+react遇到的问题/" class="archive-article-date">
+  	<time datetime="2018-05-20T12:37:43.038Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p> 标签：dva react<br><a id="more"></a></p>
+<p>###1.写form不能用getFieldsValue校验<br>    解决方法：1)<code>export default Info</code> 改为 <code>export default Form.create()(Info)</code><br>             2)从父组件中继承的对象里加入 form={…}<br>            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">       const Info = (&#123;</span><br><span class="line">channel,</span><br><span class="line">		form: &#123;</span><br><span class="line">			 getFieldDecorator,</span><br><span class="line">				validateFields,</span><br><span class="line">				getFieldsValue,</span><br><span class="line">		  &#125;,</span><br><span class="line">&#125;)=&gt;...</span><br></pre></td></tr></table></figure></p>
+<p>###2.表格的操作有详情，点击详情把参数传给详情函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">render: (item) =&gt; &#123;</span><br><span class="line">	return (</span><br><span class="line">		&lt;span className=&#123;styles.skip&#125; onClick=&#123;e=&gt;getInfo(item, e)&#125;&gt;&#123;item.merchantAbbreviation&#125;&lt;/span&gt;</span><br><span class="line">	)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>###3.withRouter的作用<br>react-router 提供了一个withRouter组件<br>withRouter可以包装任何自定义组件，将react-router 的 history,location,match 三个对象传入。<br>无需一级级传递react-router 的属性，当需要用的router 属性的时候，将组件包一层withRouter，就可以拿到需要的路由信息<br>传了路由信息，在app.js里如果没有withRouter可能会导致路由变了，但是页面内容没有改变的bug<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function App(q) &#123;</span><br><span class="line">	console.log(q) // app, children, dispatch, history, location, match, staticContext</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">     App</span><br><span class="line">     &#123;children&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">App.propTypes = &#123;</span><br><span class="line">&#125;;</span><br><span class="line">export default withRouter(connect((&#123; app&#125;) =&gt; (&#123; app &#125;))(App))</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function App(q) &#123;</span><br><span class="line">	console.log(q) // children, dispatch</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">     App</span><br><span class="line">     &#123;children&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">App.propTypes = &#123;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">export default connect()(App);</span><br></pre></td></tr></table></figure>
+<p>###4.dynamic<br>在router.js 引入的<br>import dynamic from ‘dva/dynamic’;<br>dynamic({app, models, component}) 接受三个参数。</p>
+<p>个人理解是为了按需加载models和component</p>
+<p>###5.es6<br><code>import * as Mytest from &#39;./test.js&#39;</code><br>相当于<br><code>var Mytest = require(&quot;./test.js&quot;);</code><br>把test.js里的要抛出的东西全部赋值给Mytest<br><code>import Test from &#39;./test.js&#39;</code><br>两者的区别：（以后总结）</p>
+<p>###6.引入antd；遇到的问题<br>1.<code>cnpm install antd --save</code>后，packjson和node_modules均存在antd，但是页面上<code>import { Button } from &#39;antd&#39;;</code>不能引入样式；<br>解决方法：在.roadhogrc文件下改为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&quot;development&quot;: &#123;</span><br><span class="line">      &quot;extraBabelPlugins&quot;: [</span><br><span class="line">        &quot;dva-hmr&quot;,</span><br><span class="line">        &quot;transform-runtime&quot;,</span><br><span class="line">        [</span><br><span class="line">          &quot;import&quot;, &#123;</span><br><span class="line">          &quot;libraryName&quot;: &quot;antd&quot;,</span><br><span class="line">          &quot;style&quot;: true</span><br><span class="line">        &#125;</span><br><span class="line">        ]</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure></p>
+<p>2.这时候会报错且页面不能正常显示，报错信息为：<br><img src="http://note.youdao.com/yws/res/112/WEBRESOURCE2836d9ccd8739417f3df148b23c12c6e" alt="image"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Module build failed: ReferenceError: Unknown plugin &quot;import&quot; specified in &quot;base&quot; at 5, attempted to resolve relative to &quot;E:\\project\\src&quot;</span><br><span class="line">    at Array.map (native)</span><br></pre></td></tr></table></figure></p>
+<p>解决方法：安装依赖 <code>cnpm install babel-plugin-import --save</code></p>
+<h3 id="7-Dropdown点击下拉项传参"><a href="#7-Dropdown点击下拉项传参" class="headerlink" title="7.Dropdown点击下拉项传参"></a>7.Dropdown点击下拉项传参</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">const columns = [&#123;</span><br><span class="line">   title: &apos;操作&apos;,</span><br><span class="line">     key: &apos;operation&apos;,</span><br><span class="line">     fixed: &apos;right&apos;,</span><br><span class="line">     width: 100,</span><br><span class="line">     render: (value, row) =&gt; (</span><br><span class="line">         &lt;Dropdown overlay=&#123;&lt;Menu onClick=&#123;(key) =&gt; onMenuClick(key, row)&#125;&gt;&#123;menu&#125;&lt;/Menu&gt;&#125;&gt;</span><br><span class="line">             &lt;div&gt;</span><br><span class="line">             操作 &lt;Icon type=&quot;down&quot; /&gt;</span><br><span class="line">             &lt;/div&gt;</span><br><span class="line">         &lt;/Dropdown&gt;</span><br><span class="line">     ),</span><br><span class="line"> &#125;]</span><br><span class="line"> const menuOptions = [&#123;key: 1, name: &apos;详情&apos;&#125;, &#123;key: 2, name: &apos;编辑&apos;&#125;]</span><br><span class="line"> const menu = menuOptions.map(item =&gt; &lt;Menu.Item key=&#123;item.key&#125;&gt;&#123;item.name&#125;&lt;/Menu.Item&gt;)</span><br><span class="line"> function onMenuClick(key, row) &#123;</span><br><span class="line">     console.log(key, row)</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="8-ref"><a href="#8-ref" class="headerlink" title="8.ref"></a>8.ref</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">// 父组件</span><br><span class="line">const ref = React.createRef();</span><br><span class="line">import &#123; MyList &#125; from &apos;../../components&apos;</span><br><span class="line">const &#123; AEInfo &#125; = MyList</span><br><span class="line">function Detail(&#123; list, dispatch &#125;) &#123;</span><br><span class="line">    const &#123; ainfo &#125; = list</span><br><span class="line">    const AProps = &#123; </span><br><span class="line">      ainfo,</span><br><span class="line">      updateDetail(payload) &#123;</span><br><span class="line">        dispatch(&#123;type: &apos;list/edit&apos;, payload: &#123;detail: &#123;...detail, ...payload&#125;, editFlag:&#123;...editFlag, aFlag: &apos;0&apos;&#125;&#125;&#125;)</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">    function edit() &#123;</span><br><span class="line">      ref.current.validateFieldsAndScroll((err, values) =&gt; &#123;</span><br><span class="line">        if (!err) &#123;</span><br><span class="line">          console.log(values) // 可以取到子组件的form的values</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;Tabs defaultActiveKey=&quot;1&quot; onChange=&#123;changeTab&#125;&gt;</span><br><span class="line">        &lt;TabPane tab=&quot;人员信息 1&quot; key=&quot;1&quot;&gt;&lt;AEInfo ref=&#123;ref&#125; &#123;...AProps&#125;&gt;&lt;/AEInfo&gt;&lt;/TabPane&gt;</span><br><span class="line">      &lt;/Tabs&gt;</span><br><span class="line">      &lt;div className=&#123;styles.bottonTab&#125;&gt;&lt;Button onClick=&#123;edit&#125; type=&quot;primary&quot;&gt;修改&lt;/Button&gt;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line">export default connect((&#123; list &#125;) =&gt; (&#123;list&#125;))(Detail);</span><br><span class="line"></span><br><span class="line">// 子组件</span><br><span class="line">const Info = React.forwardRef((props, ref) =&gt; &#123;</span><br><span class="line">const &#123; form &#125; = props</span><br><span class="line">const &#123; validateFieldsAndScroll &#125; = form</span><br><span class="line"> return (</span><br><span class="line">        &lt;Form&gt;&lt;/Form&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;)</span><br><span class="line">export default Form.create()(Info)</span><br></pre></td></tr></table></figure>
       
 
       
@@ -266,7 +280,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://amylino1.com /2018/05/20/阿三大下/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://amylino1.com /2018/05/20/写dva+react遇到的问题/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -284,16 +298,11 @@
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          (no title)
+          代码规范
         
       </div>
     </a>
   
-  
-    <a href="/2018/05/20/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
-      <i class="icon-circle-right"></i>
-    </a>
   
 </nav>
 
@@ -412,6 +421,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">旧事</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">游戏</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
