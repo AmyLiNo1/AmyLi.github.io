@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body {
+        color: #222;
+        font: 14px Arial;
+      }
+      
+      body a {
+        color: #3D5C9D;
+        text-decoration: none;
+      }
+    </style>
+</head>
+<script>
+
+
+const html5rocks = {indexedDB: { db: null} }
+const error = (event, message) => {
+    console.log(event, message);
+}
+const init = () => {
+    window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+    window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+    window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange
+    
+    if (!window.indexedDB) {
+        window.alert("Your browser doesn't support a stable version of IndexedDB.")
+    }
+
+    // 打开数据库
+    var request = window.indexedDB.open('person', '1');
+    request.onerror = error(event, '打开数据库失败')
+    request.onsuccess = function (event) {
+        html5rocks.indexedDB.db = event.target.result;
+        console.log('数据库打开成功', event);
+    };
+    request.onupgradeneeded = function(event) {
+        console.log('onupgradeneeded...')
+        db = event.target.result;
+        var objectStore = db.createObjectStore('person', { keyPath: 'id' });
+        objectStore.createIndex('name', 'name', { unique: false });
+        return db;
+    }
+}
+
+
+const add = (tableName, item) => {
+    var db = html5rocks.indexedDB.db;
+  var request = db
+    .transaction([tableName], "readwrite")
+    .objectStore(tableName)
+    .add(item);
+
+  request.onsuccess = function(event) {
+    console.log("数据写入成功");
+  };
+
+  request.onerror = function(event) {
+    console.log("数据写入失败");
+  };
+};
+
+const read = () => {
+    var transaction = db.transaction(['person']);
+    var objectStore = transaction.objectStore('person');
+    var request = objectStore.get(1);
+ 
+    request.onerror = function(event) {
+      console.log('事务失败');
+    };
+ 
+    request.onsuccess = function( event) {
+       if (request.result) {
+         console.log('Name: ' + request.result.name);
+         console.log('Age: ' + request.result.age);
+         console.log('Email: ' + request.result.email);
+       } else {
+         console.log('未获得数据记录');
+       }
+    };
+ }
+
+const readAll = () => {
+    const todoItems = document.querySelector('#todoItems');
+    todoItems.innerHTML = '<ul></ul>'
+    var db = html5rocks.indexedDB.db;
+    var objectStore = db.transaction('person').objectStore('person');
+  
+     objectStore.openCursor().onsuccess = function (event) {
+       var cursor = event.target.result;
+       if (cursor) {
+            const todoItems = document.querySelector('#todoItems');
+            var todoItem = document.createElement('li'); 
+            todoItem.innerHTML = `<li>id:${cursor.value.id} ;name: ${cursor.value.name}</li><button onclick="remove(${cursor.value.id})">删除</button>`
+            todoItems.appendChild(todoItem);
+         cursor.continue();
+      } else {
+        console.log('没有更多数据了！');
+      }
+    };
+  }
+const update = () => {
+    var db = html5rocks.indexedDB.db;
+    var request = db.transaction(['person'], 'readwrite')
+      .objectStore('person')
+      .put({ id: 1, name: '李四', age: 35, email: 'lisi@example.com' });
+  
+    request.onsuccess = function (event) {
+      console.log('数据更新成功');
+    };
+  
+    request.onerror = function (event) {
+      console.log('数据更新失败');
+    }
+    readAll()
+  }
+
+const remove = (id) => {
+    var db = html5rocks.indexedDB.db;
+    var request = db.transaction(['person'], 'readwrite')
+      .objectStore('person')
+      .delete(id);
+  
+    request.onsuccess = function (event) {
+      console.log('数据删除成功');
+    };
+}
+
+
+
+const addTodo = () => {
+    const input = document.querySelector('input[name="todo"]')
+    add('person', {id: new Date().getTime(), name: input.value});
+    input.value = ''
+}
+
+window.onload = function() {
+    init();
+}
+</script>
+<body>
+    <ul id="todoItems"></ul>
+    <input type="text" id="todo" name="todo" placeholder="What do you need to do?" style="width: 200px;" />
+    <input type="submit" value="Add Todo Item" onclick="addTodo()"/>
+    <button  onclick="readAll()">获取所有数据</button>
+    <button onclick="update()">更新</button>
+</body>
+</html>
